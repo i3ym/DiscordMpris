@@ -59,7 +59,13 @@ while (true)
             title = title.Split('[')[0].TrimEnd();
 
         if (length is { } len)
-            title += $" ({TimeSpan.FromMicroseconds(len):mm\\:ss})";
+        {
+            var duration = TimeSpan.FromMicroseconds(len);
+            if (duration.Hours > 0)
+                title += $" ({duration:hh\\:mm\\:ss})";
+            else
+                title += $" ({duration:mm\\:ss})";
+        }
 
 
         discordRpc.SetPresence(new RichPresence()
