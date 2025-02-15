@@ -49,7 +49,13 @@ while (true)
 
         if (cachedThumbnail?.title != title)
         {
-            var url = await getThumbnailUrl(title);
+            string? url = null;
+            try
+            {
+                url = await getThumbnailUrl(title);
+            }
+            catch { }
+
             cachedThumbnail = (title, url);
         }
 
