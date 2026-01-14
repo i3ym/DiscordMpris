@@ -1,5 +1,6 @@
 ﻿global using Tmds.DBus.Protocol;
 using System.Diagnostics;
+using System.Web;
 using DiscordRPC;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -39,7 +40,7 @@ while (true)
         var artist = metadata.TryGetValue("xesam:artist", out var _artist) ? string.Join(", ", _artist.GetArray<string>()) : "Unknown Artist";
         var title = metadata.TryGetValue("xesam:title", out var _title) ? _title.GetString() : "Unknown Title";
         if (title.Contains("Otographic") && !title.Contains("[otographic"))
-            title = metadata.TryGetValue("xesam:url", out var _url) ? Path.GetFileName(_url.ToString()) : title;
+            title = metadata.TryGetValue("xesam:url", out var _url) ? HttpUtility.UrlDecode(Path.GetFileName(_url.GetString())) : title;
 
         var album = metadata.TryGetValue("xesam:album", out var _album) ? _album.GetString() : "Unknown Album";
         long? length =
